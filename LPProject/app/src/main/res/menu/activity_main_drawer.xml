@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/insertPet"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Ingresar Mascota" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Ingresar Vacuna" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Ingresar Salida" />
+        <item
+            android:id="@+id/nav_tools"
+            android:icon="@drawable/ic_menu_share"
+            android:title="Emparejar Mascota" />
+    </group>
+
+    <item android:title="Ver información">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Ver Mascotas" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Ver Vacunas" />
+            <item
+                android:id="@+id/nav_salidas"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Ver Salidas" />
+        </menu>
+    </item>
+
+</menu>

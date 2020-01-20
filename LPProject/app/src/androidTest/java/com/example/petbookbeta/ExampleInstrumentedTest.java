@@ -1,4 +1,4 @@
-package com.example.lpproject;
+package com.example.petbookbeta;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.lpproject", appContext.getPackageName());
+        assertEquals("com.example.petbookbeta", appContext.getPackageName());
     }
 }

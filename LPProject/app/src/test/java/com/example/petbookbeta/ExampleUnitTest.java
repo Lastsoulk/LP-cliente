@@ -1,4 +1,4 @@
-package com.example.lpproject;
+package com.example.petbookbeta;
 
 import org.junit.Test;
 
