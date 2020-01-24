@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.petbookbeta.DataClass;
 import com.example.petbookbeta.R;
+import com.example.petbookbeta.clases.Animal;
 import com.example.petbookbeta.ui.login.BackgroundWorker;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.petbookbeta.ui.fragments;
+package com.example.petbookbeta.clases;
 
 import com.example.petbookbeta.R;
 

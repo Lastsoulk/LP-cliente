@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.petbookbeta.DataClass;
 import com.example.petbookbeta.R;
+import com.example.petbookbeta.clases.Animal;
 import com.example.petbookbeta.ui.login.BackgroundWorker;
 
 import java.util.ArrayList;
@@ -55,6 +56,6 @@ public class verMascotasFragment extends Fragment {//pantalla de inicio
             arr[i] = mascotas.get(i);
 
         lst.setAdapter(new CustomAdapter(getActivity(),arr,datosImg));
-        System.out.println("olabb");
+        //System.out.println("olabb");
     }
 }

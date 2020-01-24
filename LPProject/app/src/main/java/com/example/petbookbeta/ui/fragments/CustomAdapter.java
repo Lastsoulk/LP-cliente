@@ -5,14 +5,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-
 import com.example.petbookbeta.R;
+import com.example.petbookbeta.clases.Animal;
 
 public class CustomAdapter extends BaseAdapter {
 

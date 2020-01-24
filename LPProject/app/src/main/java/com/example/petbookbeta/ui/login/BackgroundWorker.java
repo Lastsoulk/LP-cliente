@@ -7,10 +7,14 @@ import android.os.AsyncTask;
 
 import com.example.petbookbeta.DataClass;
 import com.example.petbookbeta.MainActivity;
-import com.example.petbookbeta.ui.fragments.Animal;
+import com.example.petbookbeta.clases.Animal;
+import com.example.petbookbeta.clases.Doctor;
+import com.example.petbookbeta.clases.Veterinaria;
+import com.example.petbookbeta.clases.vacunas;
 import com.example.petbookbeta.ui.fragments.InsertPetFragment;
-import com.example.petbookbeta.ui.fragments.planificarSalidaFragment;
-import com.example.petbookbeta.ui.fragments.verMascotasFragment;
+import com.example.petbookbeta.ui.fragments.consultarVacunasFragment;
+import com.example.petbookbeta.ui.fragments.emparejarFragment;
+import com.example.petbookbeta.ui.fragments.planificarVacunasFragment;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -179,6 +183,117 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             if(result.equals("\tSalida planificada")){
                 logged = true;
             }
+        }else if(type.equals("vacunas")){//consultar vacunas
+
+            URL url = new URL("http://"+DataClass.ip_add+"/LPProject/LPBackEnd/consultarVacunas.php");
+            String tabla = params[1];
+            String post_data = URLEncoder.encode("vacunas","UTF-8")+"="+URLEncoder.encode("vacunas","UTF-8");
+            DataClass.vacunas.clear();
+            if(tabla.equals("planificar")){
+                result = executePHP(post_data, url);
+                String[] sop = result.split(",");
+                for (int i = 0; i <= sop.length - 1; i = i + 3) {
+                    planificarVacunasFragment.lvacunas.add(sop[i + 1]);
+                    DataClass.vacunas.add(new vacunas(sop[i], sop[i + 1], sop[i + 2]));
+                }
+            }if(tabla.equals("vacunas")) {
+                result = executePHP(post_data, url);
+                String[] sop = result.split(",");
+
+                for (int i = 0; i <= sop.length - 1; i = i + 3) {
+                    consultarVacunasFragment.lvacunas.add(sop[i + 1]);
+                    DataClass.vacunas.add(new vacunas(sop[i], sop[i + 1], sop[i + 2]));
+                }
+            }
+
+        }
+        else if(type.equals("veterinaria")){//consultar veterinaria y doctor
+
+            URL url = new URL("http://"+DataClass.ip_add+"/LPProject/LPBackEnd/selectVetORDoc.php");
+            String tabla = params[1];
+            String post_data = URLEncoder.encode("veterinaria","UTF-8")+"="+URLEncoder.encode(tabla,"UTF-8");
+            if(tabla.equals("veterinaria")){
+                result = executePHP(post_data, url);
+                String[] sop = result.split(",");
+                DataClass.veterinarias.clear();
+                for (int i = 0; i <= sop.length - 1; i = i + 3) {
+                    planificarVacunasFragment.lveterinaria.add(sop[i + 1]);
+                    DataClass.veterinarias.add(new Veterinaria(sop[i], sop[i + 1], sop[i + 2]));
+                }
+            }if(!tabla.equals("veterinaria")) {//get doctor por vet
+                result = executePHP(post_data, url);
+                String[] sop = result.split(",");
+                DataClass.doctores.clear();
+                for (int i = 0; i <= sop.length - 1; i = i + 2) {
+                    planificarVacunasFragment.ldoctor.add(sop[i + 1]);
+                    DataClass.doctores.add(new Doctor(sop[i], sop[i + 1]));
+                }
+            }
+
+        }
+        else if(type.equals("planificarVacunas")) {//planificar vacunas
+            //String cedula = DataClass.loggedUser;
+            String veterinaria = params[1];
+            String vacuna=params[2];
+            String mascota = params[3];
+            String doctor=params[4];
+            String fecha = params[5];
+            String hora=params[6];
+            URL url = new URL("http://"+DataClass.ip_add+"/LPProject/LPBackEnd/planificarVacunas.php");
+            String post_data = URLEncoder.encode("veterinaria","UTF-8")+"="+URLEncoder.encode(veterinaria,"UTF-8")+"&"
+                    +URLEncoder.encode("vacuna","UTF-8")+"="+URLEncoder.encode(vacuna,"UTF-8")+"&"
+                    +URLEncoder.encode("mascota","UTF-8")+"="+URLEncoder.encode(mascota,"UTF-8")+"&"
+                    +URLEncoder.encode("doctor","UTF-8")+"="+URLEncoder.encode(doctor,"UTF-8")+"&"
+                    +URLEncoder.encode("fecha","UTF-8")+"="+URLEncoder.encode(fecha,"UTF-8")+"&"
+                    +URLEncoder.encode("hora","UTF-8")+"="+URLEncoder.encode(hora,"UTF-8");
+            result = executePHP(post_data,url);
+            if(result.equals("\tPlanificacion de vacuna realizado con exito")){
+                logged = true;
+            }
+        }
+        else if(type.equals("tinder")) {//planificar vacunas
+            //String cedula = DataClass.loggedUser;
+            String mascota = params[1];
+            String especie=params[2];
+            String raza = params[3];
+            String genero=params[4];
+
+            URL url = new URL("http://"+DataClass.ip_add+"/LPProject/LPBackEnd/emparejar.php");
+            String post_data = URLEncoder.encode("mascota","UTF-8")+"="+URLEncoder.encode(mascota,"UTF-8")+"&"
+                    +URLEncoder.encode("especie","UTF-8")+"="+URLEncoder.encode(especie,"UTF-8")+"&"
+                    +URLEncoder.encode("raza","UTF-8")+"="+URLEncoder.encode(raza,"UTF-8")+"&"
+                    +URLEncoder.encode("genero","UTF-8")+"="+URLEncoder.encode(genero,"UTF-8");
+            result = executePHP(post_data,url);
+            DataClass.tinder.clear();
+            String[] sop = result.split(",");
+            for (int i = 0; i <= sop.length - 1; i = i + 5) {
+                //planificarVacunasFragment.ldoctor.add(sop[i + 1]);
+                DataClass.tinder.add(new Animal(sop[i],sop[i+1],sop[i+2],sop[i+3],sop[i+4],sop[i+5]));
+            }
+        }
+        else if(type.equals("transformarEspecie")) {//planificar vacunas
+            //String cedula = DataClass.loggedUser;
+            String mascota = params[1];
+
+            URL url = new URL("http://"+DataClass.ip_add+"/LPProject/LPBackEnd/transformarEspecie.php");
+            String post_data = URLEncoder.encode("campo","UTF-8")+"="+URLEncoder.encode(mascota,"UTF-8");
+            result = executePHP(post_data,url);
+            String[]ss = result.split("\t");
+            String[]ask = ss[1].split(",");
+            return ask[0];
+            //emparejarFragment.especieSel = result;
+        }
+        else if(type.equals("transformarRaza")) {//planificar vacunas
+            //String cedula = DataClass.loggedUser;
+            String mascota = params[1];
+
+            URL url = new URL("http://"+DataClass.ip_add+"/LPProject/LPBackEnd/transformarRaza.php");
+            String post_data = URLEncoder.encode("campo","UTF-8")+"="+URLEncoder.encode(mascota,"UTF-8");
+            result = executePHP(post_data,url);
+            String[]ss = result.split("\t");
+            String[]ask = ss[1].split(",");
+            return ask[0];
+            //emparejarFragment.razaSel = result;
         }
     } catch (MalformedURLException e) {
         e.printStackTrace();
