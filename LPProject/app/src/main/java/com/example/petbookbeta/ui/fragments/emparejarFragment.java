@@ -39,6 +39,7 @@ public class emparejarFragment extends Fragment {//pantalla de inicio
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_emparejar, container, false);
         mascota = view.findViewById(R.id.mascota);
+        lst = (ListView) view.findViewById(R.id.lista);
         lmascotas = new ArrayList<>();
         lmascotas.add("Escoga una opcion");
         BackgroundWorker bw = new BackgroundWorker(getActivity());
@@ -93,7 +94,7 @@ public class emparejarFragment extends Fragment {//pantalla de inicio
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            lst = (ListView) view.findViewById(R.id.lista);
+
                             mascotas.addAll(DataClass.tinder);
                             //mascotas.add(sap);
 

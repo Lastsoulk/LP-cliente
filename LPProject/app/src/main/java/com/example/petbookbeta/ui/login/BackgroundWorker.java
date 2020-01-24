@@ -38,6 +38,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
     }
     boolean logged=false;
     boolean login = false;
+    boolean ejecute;
     @Override
     protected String doInBackground(String... params) {
         String result = "";
@@ -74,9 +75,14 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                     +URLEncoder.encode("edad","UTF-8")+"="+URLEncoder.encode(edad,"UTF-8")+"&"
                         +URLEncoder.encode("foto","UTF-8")+"="+URLEncoder.encode("","UTF-8");
                 result = executePHP(post_data,url);
+            //logged = true;
                 if(result.equals("\tRegistro exitoso")){
+
                         logged = true;
                     }
+                if(!result.equals("\tRegistro exitoso")&&ejecute)
+                    result = "usuario duplicado";
+                //return result;
         }else if(type.equals("consulta")){//consultar especies
 
                 URL url = new URL("http://"+DataClass.ip_add+"/LPProject/LPBackEnd/selectGeneral.php");
@@ -160,11 +166,15 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             URL url = new URL("http://"+DataClass.ip_add+"/LPProject/LPBackEnd/searchPetFromUser.php");
             String post_data = URLEncoder.encode("cedula","UTF-8")+"="+URLEncoder.encode(cedula,"UTF-8");
             result = executePHP(post_data,url);
-            String [] sop = result.split(",");
-            DataClass.mascotas.clear();
-            for(int i=0;i<=sop.length-1;i=i+6){
+            if((!result.equals(""))||(!result.equals("\t"))) {
+                String[] sop = result.split(",");
+                DataClass.mascotas.clear();
+                if (sop.length > 5) {
+                    for (int i = 0; i <= sop.length - 1; i = i + 6) {
 
-                    DataClass.mascotas.add(new Animal(sop[i],sop[i+1],sop[i+2],sop[i+3],sop[i+4],sop[i+5]));
+                        DataClass.mascotas.add(new Animal(sop[i], sop[i + 1], sop[i + 2], sop[i + 3], sop[i + 4], sop[i + 5]));
+                    }
+                }
             }
         }
         else if(type.equals("planificarSalida")) {//planificar salidas
@@ -265,8 +275,17 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                     +URLEncoder.encode("genero","UTF-8")+"="+URLEncoder.encode(genero,"UTF-8");
             result = executePHP(post_data,url);
             DataClass.tinder.clear();
+            /*
+            String [] sop = result.split(",");
+            DataClass.mascotas.clear();
+            for(int i=0;i<=sop.length-1;i=i+6){
+
+                    DataClass.mascotas.add(new Animal(sop[i],sop[i+1],sop[i+2],sop[i+3],sop[i+4],sop[i+5]));
+            }
+             */
+
             String[] sop = result.split(",");
-            for (int i = 0; i <= sop.length - 1; i = i + 5) {
+            for (int i = 0; i <= sop.length - 1; i = i + 6) {
                 //planificarVacunasFragment.ldoctor.add(sop[i + 1]);
                 DataClass.tinder.add(new Animal(sop[i],sop[i+1],sop[i+2],sop[i+3],sop[i+4],sop[i+5]));
             }
@@ -349,11 +368,12 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
     protected void onPreExecute() {
         alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setTitle("Status");
+        ejecute=true;
     }
 
     @Override
     protected void onPostExecute(String result) {
-
+        ejecute=false;
         if (logged) {
             alertDialog.setMessage(result);
             alertDialog.show();
@@ -364,6 +384,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 context.startActivity(i);
             }
         }
+
     }
 
     @Override

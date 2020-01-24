@@ -65,8 +65,8 @@ public class RegisterAct extends AppCompatActivity  {
         boolean val = (!str_cedula.equals(""))&&(!str_contra.equals(""))&&(!str_nombre.equals(""))&&
                 (!str_ubicacion.equals(""))&&(!str_edad.equals(""));
         if(val) {
-            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-            backgroundWorker.execute(type, str_cedula, str_contra, str_nombre, str_ubicacion, str_edad);
+
+                    new BackgroundWorker(this).execute(type, str_cedula, str_contra, str_nombre, str_ubicacion, str_edad);
         }else if(!val){
             Toast.makeText(this,"Todos los campos deben estar llenos " , Toast.LENGTH_SHORT).show();
         }
