@@ -4,38 +4,47 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+
         <item
-            android:id="@+id/insertPet"
-            android:icon="@drawable/ic_menu_send"
-            android:title="Ingresar Mascota" />
+            android:id="@+id/nav_myprofile"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Mi Perfil" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_send"
-            android:title="Ingresar Vacuna" />
+            android:id="@+id/nav_vermascotas"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Ver Mascota" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_send"
-            android:title="Ingresar Salida" />
+            android:id="@+id/nav_insertpet"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Agregar Mascotas" />
         <item
-            android:id="@+id/nav_tools"
-            android:icon="@drawable/ic_menu_share"
-            android:title="Emparejar Mascota" />
+            android:id="@+id/nav_planificarsalida"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Planificar salida" />
+        <item
+            android:id="@+id/nav_emparejarmascotas"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Emparejar mascota" />
+        <item
+            android:id="@+id/nav_consultarvacunas"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Consultar Vacunas" />
+        <item
+            android:id="@+id/nav_planificarvacunas"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Planificar Vacunas" />
     </group>
 
-    <item android:title="Ver información">
+    <item android:title="Communicate">
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="Ver Mascotas" />
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/menu_share" />
             <item
                 android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="Ver Vacunas" />
-            <item
-                android:id="@+id/nav_salidas"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="Ver Salidas" />
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/menu_send" />
         </menu>
     </item>
 

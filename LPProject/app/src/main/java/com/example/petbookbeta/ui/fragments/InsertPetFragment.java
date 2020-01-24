@@ -1,4 +1,4 @@
-package com.example.petbookbeta.ui.home;
+package com.example.petbookbeta.ui.fragments;
 
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -19,30 +19,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.petbookbeta.MainActivity;
+import com.example.petbookbeta.DataClass;
 import com.example.petbookbeta.R;
 import com.example.petbookbeta.ui.login.BackgroundWorker;
-import com.example.petbookbeta.ui.login.LoginActivity;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class InsertPetFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
     public static List<String> razaArray;
     public static List<String> especieArray;
     Spinner raza;
@@ -60,11 +45,10 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        View view =  inflater.inflate(R.layout.fragment_home, container, false);
+        View view =  inflater.inflate(R.layout.fragment_insertpet, container, false);
         razaArray=new ArrayList<String>();
         especieArray=new ArrayList<String>();
         especieArray.add(0,"Escoge una opcion");
-        razaArray.add(0,"Escoge una opcion");
         raza = view.findViewById(R.id.raza);
         sexo = view.findViewById(R.id.sexo);
         btn = view.findViewById(R.id.btnMascota);
@@ -74,23 +58,24 @@ public class HomeFragment extends Fragment {
         especie = view.findViewById(R.id.especie);
         BackgroundWorker backgroundWorker = new BackgroundWorker(getActivity());
         backgroundWorker.execute("consulta","especie");
-        homeViewModel =
-                        ViewModelProviders.of(this).get(HomeViewModel.class);
 
-        final TextView textView = view.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         agregarAdapterEspecie();
         agregarAdapterGenero();
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try{
+                boolean validar = (!name.getText().toString().equals(""))&&(!edad.getText().toString().equals("")&&
+                        (!opcionEspecie.equals("Escoge una opcion"))&&(!opcionRaza.equals("Escoge una opcion")));
+                if(validar){
                 BackgroundWorker backgroundWorker = new BackgroundWorker(getActivity());
-                backgroundWorker.execute("insert",name.getText().toString(),edad.getText().toString(),opcionEspecie,opcionRaza,opcionSexo,"", LoginActivity.loggedUser);
+                backgroundWorker.execute("insert",name.getText().toString(),edad.getText().toString(),opcionEspecie,opcionRaza,opcionSexo,"", DataClass.loggedUser);
+                }else{
+                    Toast.makeText(getActivity(),"Todos los campos deben estar llenos y sin 'Escoge una opcion'" , Toast.LENGTH_SHORT).show();
+                }
+            }catch(Exception e){
+                    Toast.makeText(getActivity(),"Todos los campos deben estar llenos y sin 'Escoge una opcion'" , Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return view;
@@ -111,6 +96,8 @@ public class HomeFragment extends Fragment {
                     String pos = String.valueOf(position);
                     opcionEspecie=pos;
                     //Toast.makeText(parent.getContext(), "Selected: " + item,Toast.LENGTH_SHORT).show();
+                    razaArray.clear();
+                    razaArray.add(0,"Escoge una opcion");
                     BackgroundWorker backgroundWorker = new BackgroundWorker(getActivity());
                     backgroundWorker.execute("consulta","raza",pos);
                     agregarAdapterRaza();
@@ -166,7 +153,5 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-    public void OnGuardarPet(View view){
 
-    }
 }

@@ -3,51 +3,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/myProfile">
+    app:startDestination="@id/nav_home">
 
     <fragment
-        android:id="@+id/insertPet"
-        android:name="com.example.petbookbeta.ui.home.HomeFragment"
-        android:label="Ingresar Mascota"
+        android:id="@+id/inserpet"
+        android:name="com.example.petbookbeta.ui.fragments.InsertPetFragment"
+        android:label="Agregar Mascota"
+        tools:layout="@layout/fragment_insertpet" />
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.petbookbeta.ui.fragments.homeFragment"
+        android:label="Inicio"
         tools:layout="@layout/fragment_home" />
-
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.petbookbeta.ui.gallery.GalleryFragment"
-        android:label="Planificar Vacuna"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.petbookbeta.ui.slideshow.SlideshowFragment"
-        android:label="Planificar Salida"
-        tools:layout="@layout/fragment_slideshow" />
-
-    <fragment
-        android:id="@+id/nav_tools"
-        android:name="com.example.petbookbeta.ui.tools.ToolsFragment"
-        android:label="Emparejas Mascota"
-        tools:layout="@layout/fragment_tools" />
-
-    <fragment
-        android:id="@+id/nav_share"
-        android:name="com.example.petbookbeta.ui.share.ShareFragment"
-        android:label="Ver Mascotas"
-        tools:layout="@layout/fragment_share" />
-
-    <fragment
-        android:id="@+id/nav_send"
-        android:name="com.example.petbookbeta.ui.send.SendFragment"
-        android:label="Ver vacunas"
-        tools:layout="@layout/fragment_send" />
-    <fragment
-        android:id="@+id/nav_salidas"
-        android:name="com.example.petbookbeta.ui.salidas.SalidasFragment"
-        android:label="Ver Salidas"
-        tools:layout="@layout/fragment_salidas" />
-    <fragment
-        android:id="@+id/myProfile"
-        android:name="com.example.petbookbeta.ui.myprofile.MyProfile"
-        android:label="Perfil de usuario"
+        android:id="@+id/nav_myprofile"
+        android:name="com.example.petbookbeta.ui.fragments.MyProfile"
+        android:label="Mi Perfil"
         tools:layout="@layout/fragment_my_profile" />
+
+    <fragment
+        android:id="@+id/nav_planificarvacunas"
+        android:name="com.example.petbookbeta.ui.fragments.planificarVacunasFragment"
+        android:label="Planificar Vacunas"
+        tools:layout="@layout/fragment_planificarvacunas" />
+
+    <fragment
+        android:id="@+id/nav_planificarsalida"
+        android:name="com.example.petbookbeta.ui.fragments.planificarSalidaFragment"
+        android:label="Planificar Salida"
+        tools:layout="@layout/fragment_planificarsalida" />
+
+    <fragment
+        android:id="@+id/nav_emparejarmascotas"
+        android:name="com.example.petbookbeta.ui.fragments.emparejarFragment"
+        android:label="Emparejar Mascotas"
+        tools:layout="@layout/fragment_emparejar" />
+
+    <fragment
+        android:id="@+id/nav_vermascotas"
+        android:name="com.example.petbookbeta.ui.fragments.verMascotasFragment"
+        android:label="Ver Mascotas"
+        tools:layout="@layout/fragment_vermascota" />
+
+    <fragment
+        android:id="@+id/nav_consultarvacunas"
+        android:name="com.example.petbookbeta.ui.fragments.consultarVacunasFragment"
+        android:label="Consultar vacunas"
+        tools:layout="@layout/fragment_consultarvacunas" />
 </navigation>

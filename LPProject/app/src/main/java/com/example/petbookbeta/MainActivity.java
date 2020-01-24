@@ -2,11 +2,24 @@ package com.example.petbookbeta;
 
 import android.os.Bundle;
 
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.petbookbeta.ui.fragments.InsertPetFragment;
+import com.example.petbookbeta.ui.fragments.MyProfile;
+import com.example.petbookbeta.ui.fragments.consultarVacunasFragment;
+import com.example.petbookbeta.ui.fragments.emparejarFragment;
+import com.example.petbookbeta.ui.fragments.homeFragment;
+import com.example.petbookbeta.ui.fragments.planificarSalidaFragment;
+import com.example.petbookbeta.ui.fragments.planificarVacunasFragment;
+import com.example.petbookbeta.ui.fragments.verMascotasFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -15,32 +28,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
-import android.view.View;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private AppBarConfiguration mAppBarConfiguration;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.insertPet, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send, R.id.nav_salidas,R.id.myProfile)
-                .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+        navigationView.setNavigationItemSelectedListener(this);
 
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
+                    new MyProfile()).commit();
+            navigationView.setCheckedItem(R.id.nav_myprofile);
+        }
     }
 
     @Override
@@ -56,6 +71,59 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_home:
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
+                        new homeFragment()).commit();
+                break;
+            case R.id.nav_vermascotas:
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
+                        new verMascotasFragment()).commit();
+                break;
+            case R.id.nav_insertpet:
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
+                        new InsertPetFragment()).commit();
+                break;
+            case R.id.nav_planificarsalida:
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
+                        new planificarSalidaFragment()).commit();
+                break;
+            case R.id.nav_emparejarmascotas:
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
+                        new emparejarFragment()).commit();
+                break;
+            case R.id.nav_consultarvacunas:
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
+                        new consultarVacunasFragment()).commit();
+                break;
+            case R.id.nav_planificarvacunas:
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
+                        new planificarVacunasFragment()).commit();
+                break;
+            case R.id.nav_myprofile:
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
+                        new MyProfile()).commit();
+                break;
+            case R.id.nav_share:
+                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_send:
+                Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
+                break;
+        }
 
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }
